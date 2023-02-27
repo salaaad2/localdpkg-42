@@ -55,10 +55,13 @@ def move_contents_to_dir(install_path, package_name):
 
     if not os.path.exists(share_path):
         print(f"{share_path} does not exist")
+        exit(1)
     if not os.path.exists(bin_path):
         print(f"{bin_path} does not exist")
+        exit(1)
     if not os.path.exists(lib_path):
         print(f"{lib_path} does not exist")
+        exit(1)
 
     extracted_package_path = os.path.abspath(package_name)
     extracted_share_path = extracted_package_path + "/usr/share"
