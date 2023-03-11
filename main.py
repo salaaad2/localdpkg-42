@@ -49,32 +49,14 @@ def extract_package(package_path, package_name):
 
 def move_contents_to_dir(install_path, package_name):
     absolute_install_path = os.path.abspath(install_path)
-    share_path = absolute_install_path + "/share"
-    bin_path = absolute_install_path + "/bin"
-    lib_path = absolute_install_path + "/lib"
-
-    if not os.path.exists(share_path):
-        print(f"{share_path} does not exist")
-        exit(1)
-    if not os.path.exists(bin_path):
-        print(f"{bin_path} does not exist")
-        exit(1)
-    if not os.path.exists(lib_path):
-        print(f"{lib_path} does not exist")
-        exit(1)
 
     extracted_package_path = os.path.abspath(package_name)
-    extracted_share_path = extracted_package_path + "/usr/share"
-    extracted_bin_path = extracted_package_path + "/usr/bin"
-    extracted_lib_path = extracted_package_path + "/usr/lib"
-    if os.path.exists(extracted_bin_path):
-        print(f"Copying binaries to {extracted_bin_path}")
-        cp_command = "cp -iv " + extracted_bin_path + "/* " + bin_path
-        subprocess.run(cp_command, shell=True)
-    if os.path.exists(extracted_share_path):
-        print(f"{extracted_share_path} does not exist")
-    if os.path.exists(extracted_lib_path):
-        print(f"{extracted_lib_path} does not exist")
+    if os.path.exists(extracted_package_path + "usr"):
+        extracted_package_path += extracted_package_path + "usr/"
+
+    command = "rsync -avzh " + extracted_package_path + " " + absolute_install_path
+    if os.path.exists(extracted_package_path):
+        subprocess.run(command, shell=True)
 
 def main():
     arg_parser = init_argparse()
