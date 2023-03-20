@@ -51,10 +51,11 @@ def move_contents_to_dir(install_path, package_name):
     absolute_install_path = os.path.abspath(install_path)
 
     extracted_package_path = os.path.abspath(package_name)
-    if os.path.exists(extracted_package_path + "usr"):
-        extracted_package_path += extracted_package_path + "usr/"
+    if os.path.exists(extracted_package_path + "/usr"):
+        extracted_package_path += "/usr/"
 
-    command = "rsync -avzh " + extracted_package_path + " " + absolute_install_path
+    command = "rsync -avzh " + extracted_package_path + " " + absolute_install_path + "/"
+    print(command)
     if os.path.exists(extracted_package_path):
         subprocess.run(command, shell=True)
 
